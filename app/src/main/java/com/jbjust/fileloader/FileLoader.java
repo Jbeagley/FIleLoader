@@ -27,6 +27,10 @@ public class FileLoader extends Activity {
     public ListView mainListView ;
     public ArrayAdapter<String> listAdapter ;
 
+    /**
+     * This method lists what needs to be done when the app is run.
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,11 +41,18 @@ public class FileLoader extends Activity {
         listView=(ListView)findViewById(R.id.list);
     }
 
+    /**
+     * This method specifies the destructor
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();
     }
 
+    /**
+     * This method updates the progress bar according to the percent passed into it.
+     * @param percent the percentage of the progress bar that should be full
+     */
     public void updateProgress(final int percent) {
         if(null != mProgressBar) {
             final int progress = percent;
@@ -53,6 +64,11 @@ public class FileLoader extends Activity {
 
     }
 
+    /**
+     * This method is called when the "create" button is pushed and creates a file that has numbers
+     * 1-10 stored in it, with each number on its own line.
+     * @param view
+     */
     public void create(View view) {
         Thread cThread = new Thread(new Runnable() {
             @Override
@@ -79,8 +95,12 @@ public class FileLoader extends Activity {
         cThread.start();
     }
 
+    /**
+     * This method is called when the "load" button is pushed and reads in the file that was just
+     * written and then pushes the read-in file to the ListView
+     * @param view
+     */
     public void load(View view) {
-
         Thread lThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -112,9 +132,7 @@ public class FileLoader extends Activity {
                             }
                         });
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
+                } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
                 }
             }
@@ -122,6 +140,11 @@ public class FileLoader extends Activity {
         lThread.start();
     }
 
+    /**
+     * This method is called when the "clear" button is pushed and clears the progress bar and the
+     * ListView of all data.
+     * @param view
+     */
     public void clear(View view) {
         listAdapter.clear();
         listAdapter.notifyDataSetChanged();
